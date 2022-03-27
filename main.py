@@ -24,9 +24,8 @@ def draw_board(board):
         print()
 
 
-def draw_score(score, maxscore, word):
-    print("".join(str(score + 1) + "/" + str(maxscore)))
-    print(word)
+def draw_score(score, maxscore):
+    print("".join(str(score) + "/" + str(maxscore)))
 
 
 def count_letters(word):
@@ -61,11 +60,17 @@ def new_guess(board, words, word, score):
     else:
         return False
 
-        # if word[i] == guess[i]:
-        #     board[score][i] = colored("[" + guess[i] + "]", "green")
-        # elif guess[i] not in word:
-        #     board[score][i] = colored("[" + guess[i] + "]", "white")
-        # else:
+
+def draw_fancy_board(board, score):
+    for i in range(score):
+        for j in range(len(board[0])):
+            if "32" in board[i][j]:
+                print("🟩", end="")
+            elif "33" in board[i][j]:
+                print("🟨", end="")
+            else:
+                print("⬜", end="")
+        print()
 
 
 # board = [
@@ -91,7 +96,7 @@ if __name__ == "__main__":
     board = gen_new_board(x, y)
     while win == False and score <= y:
         clear()
-        draw_score(score, y, word)
+        draw_score(score, y)
         draw_board(board)
         win = new_guess(board, words, word, score)
         score += 1
@@ -100,7 +105,7 @@ if __name__ == "__main__":
         print("Won")
     else:
         print("Lost")
+        print("".join("the word was: " + word))
 
-    # while not win:
-    #     draw_board(board)
-    #     new_guess(board, words, word, score)
+    draw_score(score, y)
+    draw_fancy_board(board, score)

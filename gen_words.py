@@ -4,7 +4,7 @@ def load_words_len_x(x) -> set:
 
 
 if __name__ == "__main__":
-    x = 28
+    x = 5
     # print(load_words_len_x(x))
     print(len(load_words_len_x(x)))
     with open("test.txt", "w") as f:
