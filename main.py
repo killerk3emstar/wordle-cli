@@ -73,15 +73,6 @@ def draw_fancy_board(board, score):
         print()
 
 
-# board = [
-#     [None, None, None, None, None],
-#     [None, None, None, None, None],
-#     [None, None, None, None, None],
-#     [None, None, None, None, None],
-#     [None, None, None, None, None],
-#     [None, None, None, None, None],
-# ]
-
 if __name__ == "__main__":
     clear()
     win = False
@@ -90,9 +81,6 @@ if __name__ == "__main__":
     score = 0
     words = load_words_len_x(x)
     word = get_word(words)
-    # words.append("abble")
-    # words.append("pable")
-    # word = "apple"
     board = gen_new_board(x, y)
     while win == False and score <= y:
         clear()
