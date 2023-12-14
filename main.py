@@ -1,3 +1,5 @@
+import platform
+
 from gen_words import load_words_len_x
 from termcolor import colored, cprint
 import sys
@@ -6,7 +8,7 @@ import random
 
 
 def clear():
-    os.system("cls")
+    os.system("cls") if platform.system() == "Windows" else os.system("clear")
 
 
 def get_word(words) -> str:
@@ -35,13 +37,19 @@ def count_letters(word):
     return l_count
 
 
-def new_guess(board, words, word, score):
+def new_guess(board, words, word, score, guess_history):
     guess = ""
-    while len(guess) <= 1:
+    valid = False
+    while not valid:
         # while not guess in words:
-        print("".join("#" for i in range(len(board[0]))), end="\r")
+        print("#" * len(board[0]), end="\r")
         guess = str(input())
+        if len(guess) == len(word) and guess in words and not guess in guess_history:
+            valid = True
+        else:
+            print("Invalid guess")
     # guess = [i for i in guess]
+    guess_history.append(guess)
     word_letters = count_letters(word)
 
     for i in range(len(guess)):
@@ -75,6 +83,7 @@ def draw_fancy_board(board, score):
 
 if __name__ == "__main__":
     clear()
+    # print(platform.system())
     win = False
     x = int(input("Word's length: "))
     y = int(input("How many guesses: "))
@@ -82,11 +91,13 @@ if __name__ == "__main__":
     words = load_words_len_x(x)
     word = get_word(words)
     board = gen_new_board(x, y)
-    while win == False and score <= y:
+    guess_history = []
+    while win == False and score < y:
         clear()
+        # print(word)
         draw_score(score, y)
         draw_board(board)
-        win = new_guess(board, words, word, score)
+        win = new_guess(board, words, word, score, guess_history)
         score += 1
     clear()
     if win == True:
